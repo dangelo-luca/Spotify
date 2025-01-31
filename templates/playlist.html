@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
+    <title>{{ playlist['name'] }}</title>
+</head>
+<body>
+    <div class="Jumbotron">
+        <h1 align="center">Playlist: {{ playlist['name'] }}</h1>  
+        
+        {% if playlist['images'] %}
+            <img src="{{ playlist['images'][0]['url'] }}" width="200">
+        {% endif %}
+
+        <br><br>
+
+        <h2>BRANI DELLA PLAYLIST:</h2>
+        <br>
+        {% if tracks %}
+            <ul>
+                {% for item in tracks %}
+                    <li>{{ item['track']['name'] }} - 
+                        {% for artist in item['track']['artists'] %}
+                            {{ artist['name'] }}{% if not loop.last %}, {% endif %}
+                        {% endfor %}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Questa playlist non contiene brani.</p>
+        {% endif %}
+
+        <br>
+        <br>
+        <br>
+        <a href="{{ url_for('home') }}">TORNA ALLA HOME</a>
+        <br>
+        <br>
+        <br>
+    </div>
+</body>
+</html>

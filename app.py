@@ -50,8 +50,19 @@ def home():
     return render_template('home.html', user_info=user_info, playlists=playlists_info) #passo le info utente all'home.html
 
 @app.route('/playlist/<playlist_id>')
-def playlist(playlist_id):
+def brani(playlist_id):
     token_info = session.get('token_info', None)
     if not token_info:
         return redirect(url_for('login'))
+
+    sp = spotipy.Spotify(auth=token_info['access_token'])
+    
+    playlist = sp.playlist(playlist_id)
+    
+    results = sp.playlist_items(playlist_id)
+    tracks = results['items']  # Lista di canzoni
+    
+    # Pagina di ritorno
+    return render_template('playlist.html', playlist=playlist, tracks=tracks)
+
 app.run(debug=True)

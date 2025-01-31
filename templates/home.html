@@ -35,6 +35,9 @@
                         Nessuna immagine
                     {% endif %}
                     </td>
+                    <td>
+                        <a href="{{ url_for('brani', playlist_id=playlist['id']) }}">Visualizza Canzoni</a>
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>
